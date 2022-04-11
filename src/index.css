@@ -1,13 +1,80 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+
+  background-image: url(https://img.freepik.com/free-photo/sport-kit-lying-with-juicy-fruit_23-2147829441.jpg?w=2000);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Title component */
+.headers {
+  background-color: whitesmoke;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.restOfTitle {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.nameOfSite {
+  font-size: 30px;
+  margin-top: 20px;
+  color: rgb(202, 72, 154);
+  -webkit-text-stroke: 2px rgb(202, 72, 154);
+  padding: 5px;
+}
+
+.tagline {
+  margin-top: 5px;
+  margin-bottom: 30px;
+  padding: 5px;
+}
+
+/* Nav component */
+.onScreenLink {
+  text-decoration: none;
+  color: black;
+  padding: 5px;
+  margin-right: 10px;
+  background-color: rgb(202, 72, 154);
+  border-radius: 10%;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* LoginOrRegister component */
+.userInfoInputs {
+  margin-top: 30px;
+}
+
+.usernameInput,
+.passwordInput {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+.loginRegButton {
+  background-color: rgb(202, 72, 154);
+  padding: 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10%;
+}
+
+.loginRegButton:hover {
+  cursor: pointer;
 }
