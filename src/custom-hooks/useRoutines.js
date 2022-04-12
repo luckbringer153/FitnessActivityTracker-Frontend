@@ -3,28 +3,26 @@ import { useAuth } from "./useAuth";
 
 export function useRoutines() {
   const [routines, setRoutines] = useState([]);
-  const { token } = useAuth();
+  // const { token } = useAuth();
 
   useEffect(() => {
     async function fetchRoutines() {
       try {
         const response = await fetch(
           `https://fitnesstrac-kr.herokuapp.com/api/routines`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { "Content-Type": "application/json" } }
         );
 
-        const { success, error, data } = await response.json();
+        const routines = await response.json();
 
-        if (success) {
-          setRoutines(data.routines);
-        }
+        setRoutines(routines);
       } catch (error) {
         console.error(error);
       }
     }
 
     fetchRoutines();
-  }, [routines]);
+  }, []);
 
   return { routines, setRoutines };
 }

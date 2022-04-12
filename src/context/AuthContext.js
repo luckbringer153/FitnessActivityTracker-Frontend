@@ -7,13 +7,13 @@ export default function AuthProvider({ children }) {
   const [shouldUpdate, setShouldUpdate] = useState(false);
 
   useEffect(() => {
-    setToken(localStorage.st_token || "");
+    setToken(localStorage.ft_token || "");
   }, [shouldUpdate]);
 
   const updateAuthStatus = () => setShouldUpdate(!shouldUpdate);
 
   const logout = () => {
-    delete localStorage.st_token;
+    delete localStorage.ft_token;
     updateAuthStatus();
   };
 

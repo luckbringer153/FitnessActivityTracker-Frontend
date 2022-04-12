@@ -8,17 +8,21 @@ export function useActivities() {
   useEffect(() => {
     async function fetchActivities() {
       try {
-        const reponse = await fetch(
+        const response = await fetch(
           `http://fitnesstrac-kr.herokuapp.com/api/activities`,
-          { headers: { "Content-Type": "application/son" } }
+          { headers: { "Content-Type": "application/json" } }
         );
+
+        const activities = await response.json();
+
+        setActivities(activities);
       } catch (error) {
         console.error(error);
       }
     }
 
     fetchActivities();
-  }, [activities]);
+  }, []);
 
   return { activities, setActivities };
 }

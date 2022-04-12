@@ -7,13 +7,15 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useAuth } from "./custom-hooks";
-import { default as Title } from "./components/Title";
-import { default as Nav } from "./components/Nav";
-import { default as Routines } from "./components/Routines";
-import { default as Activities } from "./components/Activities";
-import { default as LoginOrRegister } from "./components/LoginOrRegister";
-import { default as MyRoutines } from "./components/MyRoutines";
-//why can't I use import {.......} from "./components", using the components' index file to export everything as default??
+import {
+  Title,
+  Nav,
+  Routines,
+  Activities,
+  LoginOrRegister,
+  MyRoutines,
+  AddRoutine,
+} from "./components";
 
 function App() {
   const { token, isLoggedIn, logout } = useAuth();
@@ -48,6 +50,8 @@ function App() {
             <Route path="/routines" component={Routines} />
 
             <Route path="/myroutines" component={MyRoutines} />
+
+            <Route path="/myroutines/newroutine" component={AddRoutine} />
 
             <Route path="/activities" component={Activities} />
           </>

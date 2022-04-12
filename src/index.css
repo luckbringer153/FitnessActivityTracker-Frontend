@@ -33,8 +33,8 @@ code {
 .nameOfSite {
   font-size: 30px;
   margin-top: 20px;
-  color: rgb(202, 72, 154);
-  -webkit-text-stroke: 2px rgb(202, 72, 154);
+  color: rgb(220, 71, 165);
+  -webkit-text-stroke: 2px rgb(220, 71, 165);
   padding: 5px;
 }
 
@@ -45,15 +45,26 @@ code {
 }
 
 /* Nav component */
-.onScreenLink {
+.onScreenLink,
+.logoutButton {
   text-decoration: none;
   color: black;
   padding: 5px;
   margin-right: 10px;
-  background-color: rgb(202, 72, 154);
+  background-color: rgb(251, 75, 186);
   border-radius: 10%;
   font-style: italic;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.logoutButton {
+  border: none;
+  font-size: 15px;
+}
+
+.logoutButton:hover {
+  cursor: pointer;
 }
 
 /* LoginOrRegister component */
@@ -68,7 +79,7 @@ code {
 }
 
 .loginRegButton {
-  background-color: rgb(202, 72, 154);
+  background-color: rgb(251, 75, 186);
   padding: 5px;
   font-size: 14px;
   border: none;
@@ -76,5 +87,64 @@ code {
 }
 
 .loginRegButton:hover {
+  cursor: pointer;
+}
+
+/* Routines && Activities Components */
+.eachRoutine,
+.eachActivity {
+  background-color: whitesmoke;
+  width: 650px;
+}
+
+/* MyRoutines Component */
+.myRoutinesLinks {
+  text-decoration: none;
+  color: black;
+  padding: 5px;
+  margin-right: 10px;
+  background-color: rgb(220, 71, 165);
+  border-radius: 10%;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.welcomeBlurb {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.myRoutinesListWhole {
+  background-color: white;
+  width: 650px;
+}
+
+.myRoutinesList {
+  /*or this will be for .routineBlock*/
+  background-color: rgb(220, 220, 220);
+}
+
+/* AddRoutine Component */
+.nameInput,
+.goalInput,
+.isPublicInput {
+  margin-bottom: 5px;
+}
+
+.addRoutineButton {
+  text-decoration: none;
+  color: black;
+  padding: 5px;
+  margin-right: 10px;
+  background-color: rgb(220, 71, 165);
+  border-radius: 10%;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 12px;
+  border: none;
+}
+
+.addRoutineButton:hover {
   cursor: pointer;
 }

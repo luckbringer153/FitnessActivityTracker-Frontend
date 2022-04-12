@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 const loggedInLinks = [
   { id: 1, to: "/routines", name: "All Routines" },
   { id: 2, to: "/activities", name: "All Activities" },
+  { id: 3, to: "/myroutines", name: "My Routines" },
 ];
 
 const loggedOutLinks = [
@@ -16,6 +17,7 @@ const loggedOutLinks = [
 
 export default function Nav() {
   const { isLoggedIn, logout } = useAuth();
+  // console.log(isLoggedIn);
   const NavLinks = isLoggedIn ? loggedInLinks : loggedOutLinks;
 
   return (

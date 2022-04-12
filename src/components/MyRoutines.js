@@ -3,6 +3,10 @@ import { NavLink } from "react-router-dom";
 import { useMe, useAuth } from "../custom-hooks";
 
 export default function MyRoutines() {
+  const links = [
+    { id: 1, to: "/myroutines/newroutine", name: "Create New Routine" },
+  ];
+
   const { meData, setMeData } = useMe();
   const { routines } = meData || {};
   const { token } = useAuth();
@@ -57,12 +61,19 @@ export default function MyRoutines() {
 
   return (
     <nav>
-      <aside>
+      {links.map(({ id, to, name }) => (
+        <NavLink key={id} to={to} className="myRoutinesLinks">
+          {name}
+        </NavLink>
+      ))}
+
+      {/* "meData" is empty here; either fix meData or find username somewhere else */}
+      <aside className="welcomeBlurb">
         Welcome to your profile, <b>{meData.username}</b>!
       </aside>
 
-      <section classname="myRoutinesListWhole">
-        <h4>Routines I've Created</h4>
+      <section className="myRoutinesListWhole">
+        <h4>Routines You Have Created</h4>
         <main className="myRoutinesList">
           {!routines ? (
             "You've made no routines yet."

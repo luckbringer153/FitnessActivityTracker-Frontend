@@ -9,7 +9,7 @@ export default function LoginOrRegister() {
 
   const currentURL = window.location.href;
   const loginOrRegister = currentURL.slice(22);
-  //   console.log(loginOrRegister);
+  // console.log(loginOrRegister);
 
   const [form, setForm] = useState({ username: "", password: "" });
 
@@ -26,17 +26,17 @@ export default function LoginOrRegister() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user: form }),
+          body: JSON.stringify(form),
         }
       );
 
-      const { success, error, data } = await response.json();
+      const { user, message, token } = await response.json();
 
-      if (success) {
-        localStorage.st_token = data.token;
+      if (user) {
+        localStorage.ft_token = token;
         updateAuthStatus();
         console.log(
-          `Success! Welcome ${form.username} with bearer token ${data.token}.`
+          `Success! Welcome ${user.username} with bearer token ${token}.`
         );
         history.push("./myroutines");
       } else {
