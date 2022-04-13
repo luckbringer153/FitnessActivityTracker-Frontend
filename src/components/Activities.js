@@ -23,8 +23,8 @@ export default function Activities() {
               {token ? (
                 <NavLink
                   key="1"
-                  to={`/editactivity/?activityId=${activity.id}&activityName=${activity.name}`}
-                  className="editActivityButton"
+                  to={`/editactivity/?id=${activity.id}&name=${activity.name}&description=${activity.description}`}
+                  className="editActivityButtonforall"
                 >
                   Edit Activity
                 </NavLink>

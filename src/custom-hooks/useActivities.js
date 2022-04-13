@@ -8,10 +8,9 @@ export function useActivities() {
   useEffect(() => {
     async function fetchActivities() {
       try {
-        const response = await fetch(
-          `http://fitnesstrac-kr.herokuapp.com/api/activities`,
-          { headers: { "Content-Type": "application/json" } }
-        );
+        const response = await fetch(`http://localhost:3000/api/activities`, {
+          headers: { "Content-Type": "application/json" },
+        });
 
         const activities = await response.json();
 

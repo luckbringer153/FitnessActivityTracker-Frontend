@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../custom-hooks";
+import { useAuth, useMe } from "../custom-hooks";
 
 export default function AddRoutine() {
   const history = useHistory();
+  const { meData } = useMe();
+  console.log("creatorId:", meData.creatorId);
 
   const [form, setForm] = useState({
     name: "",
     goal: "",
-    isPublic: null,
+    isPublic: "",
+    creatorId: "",
   });
   const { token } = useAuth();
 
@@ -19,15 +22,24 @@ export default function AddRoutine() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    console.log(form);
+
     try {
-      const response = await fetch(
-        `http://fitnesstrac-kr.herokuapp.com/api/routines`,
-        { method: "POST", body: JSON.stringify({ routine: form }) }
-      );
+      const response = await fetch(`http://localhost:3000/api/routines`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-      const { success, data, error } = await response.json();
+      const { creatorId, name } = await response.json();
 
-      if (success) {
+      if (creatorId) {
+        console.log(
+          `Success! You, creatorId #${creatorId}, made the routine named "${name}".`
+        );
         history.push("/routines");
       } else {
         throw new Error("error creating routine");
@@ -39,9 +51,10 @@ export default function AddRoutine() {
 
   return (
     <main className="addRoutineInputs">
-      <h3>Create Custom Routine</h3>
+      <h3 className="addRoutineHeader">Create Custom Routine</h3>
 
       <form onSubmit={handleSubmit}>
+        <label>Your Creator ID: {meData.creatorId}</label>
         <div className="nameInput">
           <label style={{ marginRight: 5 + "px" }}>Name of Your Routine:</label>
           <input
@@ -72,7 +85,7 @@ export default function AddRoutine() {
             value={form.isPublic}
             onChange={handleChange}
           />
-          <label style={{ marginLeft: 5 + "px" }}>(null by default)</label>
+          <label style={{ marginLeft: 5 + "px" }}>(false by default)</label>
         </div>
         <input
           type="submit"

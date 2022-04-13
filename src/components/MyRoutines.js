@@ -3,9 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useMe, useAuth } from "../custom-hooks";
 
 export default function MyRoutines() {
-  const links = [
-    { id: 1, to: "/myroutines/newroutine", name: "Create New Routine" },
-  ];
+  const links = [{ id: 1, to: "/newroutine", name: "Create New Routine" }];
 
   const { meData, setMeData } = useMe();
   const { routines } = meData || {};
@@ -26,7 +24,7 @@ export default function MyRoutines() {
     if (answer) {
       try {
         const response = await fetch(
-          `http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}`,
+          `http://localhost:3000/api/routines/${routineId}`,
           {
             method: "DELETE",
             headers: {

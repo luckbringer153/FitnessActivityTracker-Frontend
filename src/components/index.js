@@ -5,4 +5,5 @@ export { default as Routines } from "./Routines";
 export { default as LoginOrRegister } from "./LoginOrRegister";
 export { default as MyRoutines } from "./MyRoutines";
 export { default as AddRoutine } from "./AddRoutine";
-//not working
+export { default as EditActivity } from "./EditActivity";
+export { default as EditRoutine } from "./EditRoutine";

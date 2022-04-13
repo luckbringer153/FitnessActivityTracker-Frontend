@@ -15,6 +15,8 @@ import {
   LoginOrRegister,
   MyRoutines,
   AddRoutine,
+  EditActivity,
+  EditRoutine,
 } from "./components";
 
 function App() {
@@ -51,9 +53,13 @@ function App() {
 
             <Route path="/myroutines" component={MyRoutines} />
 
-            <Route path="/myroutines/newroutine" component={AddRoutine} />
+            <Route path="/newroutine" component={AddRoutine} />
+
+            <Route path="/editroutine" component={EditRoutine} />
 
             <Route path="/activities" component={Activities} />
+
+            <Route path="/editactivity" component={EditActivity} />
           </>
         )}
 

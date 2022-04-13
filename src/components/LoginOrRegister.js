@@ -22,7 +22,7 @@ export default function LoginOrRegister() {
 
     try {
       const response = await fetch(
-        `http://fitnesstrac-kr.herokuapp.com/api/users/${loginOrRegister}`,
+        `http://localhost:3000/api/users/${loginOrRegister}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ export default function LoginOrRegister() {
         }
       );
 
-      const { user, message, token } = await response.json();
+      const { user, token } = await response.json();
 
       if (user) {
         localStorage.ft_token = token;
@@ -73,6 +73,10 @@ export default function LoginOrRegister() {
           value={form.password}
           onChange={handleChange}
         />
+      </div>
+      <div style={{ marginBottom: 10 + "px" }}>
+        {loginOrRegister === "register" &&
+          "Password must be at least 8 characters in length."}
       </div>
       <input
         type="submit"

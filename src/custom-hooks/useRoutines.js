@@ -8,10 +8,9 @@ export function useRoutines() {
   useEffect(() => {
     async function fetchRoutines() {
       try {
-        const response = await fetch(
-          `https://fitnesstrac-kr.herokuapp.com/api/routines`,
-          { headers: { "Content-Type": "application/json" } }
-        );
+        const response = await fetch(`http://localhost:3000/api/routines`, {
+          headers: { "Content-Type": "application/json" },
+        });
 
         const routines = await response.json();
 

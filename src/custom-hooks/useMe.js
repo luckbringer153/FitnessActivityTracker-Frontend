@@ -8,21 +8,21 @@ export function useMe() {
   useEffect(() => {
     async function fetchMe() {
       try {
-        const response = await fetch(
-          `http://fitnesstrac-kr.herokuapp.com/api/users/me`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`http://localhost:3000/api/users/me`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        const { success, error, data } = await response.json();
+        const meData = await response.json();
+        // console.log({ meData });
 
-        if (success) {
-          setMeData(data);
-        }
+        setMeData(meData);
+
+        // if (success) {
+        //   setMeData(data);
+        // }
       } catch (error) {
         console.error(error);
       }
