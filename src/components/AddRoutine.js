@@ -5,13 +5,11 @@ import { useAuth, useMe } from "../custom-hooks";
 export default function AddRoutine() {
   const history = useHistory();
   const { meData } = useMe();
-  console.log("creatorId:", meData.creatorId);
 
   const [form, setForm] = useState({
     name: "",
     goal: "",
     isPublic: "",
-    creatorId: "",
   });
   const { token } = useAuth();
 
@@ -31,7 +29,7 @@ export default function AddRoutine() {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, creatorId: meData.id }),
       });
 
       const { creatorId, name } = await response.json();
@@ -54,7 +52,7 @@ export default function AddRoutine() {
       <h3 className="addRoutineHeader">Create Custom Routine</h3>
 
       <form onSubmit={handleSubmit}>
-        <label>Your Creator ID: {meData.creatorId}</label>
+        <label>Your Creator ID: {meData.id}</label>
         <div className="nameInput">
           <label style={{ marginRight: 5 + "px" }}>Name of Your Routine:</label>
           <input

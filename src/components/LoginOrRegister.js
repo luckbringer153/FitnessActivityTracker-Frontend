@@ -35,9 +35,9 @@ export default function LoginOrRegister() {
       if (user) {
         localStorage.ft_token = token;
         updateAuthStatus();
-        console.log(
-          `Success! Welcome ${user.username} with bearer token ${token}.`
-        );
+        // console.log(
+        //   `Success! Welcome ${user.username} with bearer token ${token}.`
+        // );
         history.push("./myroutines");
       } else {
         window.alert(

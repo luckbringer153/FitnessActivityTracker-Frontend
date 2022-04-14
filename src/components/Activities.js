@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useActivities, useAuth } from "../custom-hooks";
 import { NavLink } from "react-router-dom";
 
 export default function Activities() {
-  const { activities, setActivities } = useActivities();
+  const { activities } = useActivities();
   const { token } = useAuth();
 
   return !activities ? (
@@ -12,6 +12,17 @@ export default function Activities() {
     </main>
   ) : (
     <main className="activitiesList">
+      <div>
+        {token ? (
+          <NavLink
+            key="2"
+            to={`/addactivity`}
+            className="addActivityButtonforall"
+          >
+            Add Activity
+          </NavLink>
+        ) : null}
+      </div>
       {activities.map((activity) => {
         return (
           <section className="eachActivity" key={activity.id}>

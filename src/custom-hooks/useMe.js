@@ -28,7 +28,9 @@ export function useMe() {
       }
     }
 
-    fetchMe();
+    if (token) {
+      fetchMe();
+    }
   }, [token]);
 
   return { meData, setMeData };

@@ -1,18 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useMe, useAuth } from "../custom-hooks";
+import { useMe, useAuth, useMyRoutines } from "../custom-hooks";
 
 export default function MyRoutines() {
   const links = [{ id: 1, to: "/newroutine", name: "Create New Routine" }];
 
   const { meData, setMeData } = useMe();
-  const { routines } = meData || {};
+  const { myRoutines } = useMyRoutines();
   const { token } = useAuth();
-
-  //this is likely wrong
-  const publicRoutines = routines
-    ? routines.filter((routine) => routine.active)
-    : [];
 
   async function clickDelete(routineId) {
     let answer = false;
@@ -37,9 +32,9 @@ export default function MyRoutines() {
         const { success } = await response.json();
 
         if (success) {
-          console.log(`Routine #${routineId} was deleted.`);
+          // console.log(`Routine #${routineId} was deleted.`);
 
-          const filteredRoutines = routines.map((routine) => {
+          const filteredRoutines = myRoutines.map((routine) => {
             if (routine.id === routineId) {
               routine.isPublic = false; //check with Daniel what we should be "changing" here, there's no active/non-active tags on the routines, just if it's public or not
             }
@@ -53,7 +48,7 @@ export default function MyRoutines() {
         console.error(error);
       }
     } else {
-      console.log("The post was not deleted.");
+      // console.log("The post was not deleted.");
     }
   }
 
@@ -65,7 +60,6 @@ export default function MyRoutines() {
         </NavLink>
       ))}
 
-      {/* "meData" is empty here; either fix meData or find username somewhere else */}
       <aside className="welcomeBlurb">
         Welcome to your profile, <b>{meData.username}</b>!
       </aside>
@@ -73,38 +67,51 @@ export default function MyRoutines() {
       <section className="myRoutinesListWhole">
         <h4>Routines You Have Created</h4>
         <main className="myRoutinesList">
-          {!routines ? (
+          {!myRoutines ? (
             "You've made no routines yet."
           ) : (
             <>
-              {publicRoutines &&
-                publicRoutines.map((routine) => (
-                  <section className="routineBlock" key={routine.id}>
-                    <div className="eachMyRoutines">
-                      <div className="eachMyRoutinesID">
-                        Routine ID: {routine.id}
-                      </div>
-                      <div className="eachMyRoutinesName">
-                        Post Name: {routine.name}
-                      </div>
-                      <div className="eachMyRoutinesGoal">
-                        Routine Goal: {routine.goal}
-                      </div>
-                      <div className="eachMyRoutinesisPublic">
-                        isPublic: {routine.isPublic}
-                      </div>
-                      <div className="eachMyRoutinesActivities">
-                        Activities: {routine.activities}
-                      </div>
+              {myRoutines.map((routine) => (
+                <section className="routineBlock" key={routine.id}>
+                  <div className="eachMyRoutines">
+                    <div className="eachMyRoutinesID">
+                      Routine ID: {routine.id}
                     </div>
-                    <button
-                      className="deleteRoutineButton"
-                      onClick={() => clickDelete(routine.id)}
-                    >
-                      Delete
-                    </button>
-                  </section>
-                ))}
+                    <div className="eachMyRoutinesName">
+                      Post Name: {routine.name}
+                    </div>
+                    <div className="eachMyRoutinesGoal">
+                      Routine Goal: {routine.goal}
+                    </div>
+                    <div className="eachMyRoutinesisPublic">
+                      isPublic: {routine.isPublic}
+                    </div>
+                    <div>
+                      {routine.activities.map(
+                        ({ name, description, count, duration, id }) =>
+                          id ? (
+                            <ul>
+                              <li key={id}>
+                                Do {name} - {description} - {count} times for{" "}
+                                {duration} minutes
+                              </li>
+                            </ul>
+                          ) : (
+                            "There are no activities for this routine."
+                          )
+                      )}
+                    </div>
+                  </div>
+                  {/* add dropdown menu labeled "Add Activity", where dropdown items are the names of all activites */}
+                  {/* put "edit routine" button here */}
+                  <button
+                    className="deleteRoutineButton"
+                    onClick={() => clickDelete(routine.id)}
+                  >
+                    Delete
+                  </button>
+                </section>
+              ))}
             </>
           )}
         </main>

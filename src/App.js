@@ -2,7 +2,6 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch,
   Redirect,
 } from "react-router-dom";
@@ -17,10 +16,11 @@ import {
   AddRoutine,
   EditActivity,
   EditRoutine,
+  AddActivity,
 } from "./components";
 
 function App() {
-  const { token, isLoggedIn, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   return (
     <Router>
@@ -60,6 +60,8 @@ function App() {
             <Route path="/activities" component={Activities} />
 
             <Route path="/editactivity" component={EditActivity} />
+
+            <Route path="/addactivity" component={AddActivity} />
           </>
         )}
 

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 // import { useRoutines } from "/custom-hooks/useRoutines";
 // import { useAuth } from "/custom-hooks/useAuth";
-import { useRoutines, useAuth, useMe } from "../custom-hooks";
+import { useRoutines, useMe } from "../custom-hooks";
 import { NavLink } from "react-router-dom";
 
 export default function Routines() {
-  const { token } = useAuth();
-  const { routines, setRoutines } = useRoutines();
+  const { routines } = useRoutines();
   const { meData } = useMe();
   // console.log(routines);
   // console.log(routines[0].activities[0].name);
@@ -40,18 +39,19 @@ export default function Routines() {
             <p>Should this be public? {routine.isPublic ? "true" : "false"}</p>
             <p style={{ textDecoration: "underline" }}>Activities</p>
             <div>
-              {routine.activities
-                ? routine.activities.map(
-                    ({ name, description, count, duration, id }) => (
-                      <ul>
-                        <li key={id}>
-                          Do {name} - {description} - {count} times for{" "}
-                          {duration} minutes
-                        </li>
-                      </ul>
-                    )
+              {routine.activities.map(
+                ({ name, description, count, duration, id }) =>
+                  id ? (
+                    <ul>
+                      <li key={id}>
+                        Do {name} - {description} - {count} times for {duration}{" "}
+                        minutes
+                      </li>
+                    </ul>
+                  ) : (
+                    "There are no activities for this routine."
                   )
-                : "There are no activities for this routine."}
+              )}
             </div>
             <p>
               {routine.creatorId === meData.id ? (
