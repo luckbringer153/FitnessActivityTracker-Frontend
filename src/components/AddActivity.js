@@ -5,7 +5,7 @@ import { useAuth, useMe } from "../custom-hooks";
 export default function AddActivity() {
   const history = useHistory();
   const { meData } = useMe();
-  console.log("creatorId:", meData.creatorId);
+  // console.log("creatorId:", meData.creatorId);
 
   const [form, setForm] = useState({
     name: "",
@@ -20,7 +20,7 @@ export default function AddActivity() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(form);
+    // console.log(form);
 
     try {
       const response = await fetch(`http://localhost:3000/api/activities`, {
@@ -35,7 +35,7 @@ export default function AddActivity() {
       const { id, name } = await response.json();
 
       if (id) {
-        console.log(`Success! You made the activity named "${name}".`);
+        // console.log(`Success! You made the activity named "${name}".`);
         history.push("/activities");
       } else {
         throw new Error("error creating activity");

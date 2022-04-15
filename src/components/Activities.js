@@ -16,10 +16,10 @@ export default function Activities() {
         {token ? (
           <NavLink
             key="2"
-            to={`/addactivity`}
-            className="addActivityButtonforall"
+            to="/addactivity"
+            className="createActivityButtonforall"
           >
-            Add Activity
+            Create New Activity
           </NavLink>
         ) : null}
       </div>

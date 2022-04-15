@@ -46,6 +46,9 @@ export default function LoginOrRegister() {
         throw new Error(`error with user action, ${loginOrRegister}`);
       }
     } catch (error) {
+      window.alert(
+        "Oops, something went wrong! Please ensure you've entered a valid username and/or password combination."
+      );
       console.error(error);
     }
   }

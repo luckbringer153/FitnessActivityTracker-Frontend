@@ -29,6 +29,9 @@ export default function Routines() {
     </main>
   ) : (
     <main className="routinesList">
+      <NavLink key="2" to="/newroutine" className="createNewRoutineButton">
+        Create New Routine
+      </NavLink>
       {routines.map((routine) => {
         return (
           <section className="eachRoutine" key={routine.id}>

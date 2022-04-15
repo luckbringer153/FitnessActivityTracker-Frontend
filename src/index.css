@@ -106,8 +106,8 @@ code {
   font-size: 14px;
 }
 
-/* MyRoutines Component */
-.myRoutinesLinks {
+.createNewRoutineButton,
+.createActivityButtonforall {
   text-decoration: none;
   color: black;
   padding: 5px;
@@ -119,9 +119,15 @@ code {
   font-size: 12px;
 }
 
+/* MyRoutines Component */
 .welcomeBlurb {
-  margin-top: 20px;
+  margin-top: 5px;
   font-weight: bold;
+}
+
+.routinesCreatedBlurb {
+  margin: 10px;
+  padding-top: 10px;
 }
 
 .myRoutinesListWhole {
@@ -130,8 +136,17 @@ code {
 }
 
 .myRoutinesList {
-  /*or this will be for .routineBlock*/
   background-color: rgb(220, 220, 220);
+}
+
+.routineBlock {
+  border-top: black 4px dashed;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.routineBlock:first-child {
+  border: none;
 }
 
 /* AddRoutine Component */

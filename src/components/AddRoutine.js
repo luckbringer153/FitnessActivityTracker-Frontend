@@ -35,9 +35,9 @@ export default function AddRoutine() {
       const { creatorId, name } = await response.json();
 
       if (creatorId) {
-        console.log(
-          `Success! You, creatorId #${creatorId}, made the routine named "${name}".`
-        );
+        // console.log(
+        //   `Success! You, creatorId #${creatorId}, made the routine named "${name}".`
+        // );
         history.push("/routines");
       } else {
         throw new Error("error creating routine");
