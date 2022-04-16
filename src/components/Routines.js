@@ -39,7 +39,6 @@ export default function Routines() {
             <h2>{routine.name}</h2>
             <p>Goal: {routine.goal}</p>
             <p>Created by: {routine.creatorName}</p>
-            <p>Should this be public? {routine.isPublic ? "true" : "false"}</p>
             <p style={{ textDecoration: "underline" }}>Activities</p>
             <div>
               {routine.activities.map(
@@ -60,8 +59,8 @@ export default function Routines() {
               {routine.creatorId === meData.id ? (
                 <NavLink
                   key="1"
-                  to={`/editpost/?name=${routine.name}&goal=${routine.goal}&isPublic=${routine.isPublic}&creatorId=${routine.creatorId}$id=${routine.id}`}
-                  className="editRoutineButton"
+                  to={`/editroutine/?name=${routine.name}&goal=${routine.goal}&isPublic=${routine.isPublic}&creatorId=${routine.creatorId}&id=${routine.id}`}
+                  className="editActivityButtonforall"
                 >
                   Edit My Routine
                 </NavLink>

@@ -123,6 +123,7 @@ code {
 .welcomeBlurb {
   margin-top: 5px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .routinesCreatedBlurb {
@@ -147,6 +148,11 @@ code {
 
 .routineBlock:first-child {
   border: none;
+}
+
+.enterNewActivity {
+  background-color: rgb(152, 152, 152);
+  padding: 5px;
 }
 
 /* AddRoutine Component */
@@ -181,7 +187,10 @@ code {
   margin-bottom: 30px;
 }
 
-.editActivityButton {
+.editActivityButton,
+.addActivityToRoutineButton,
+.editRoutineButton,
+.deleteRoutineButton {
   text-decoration: none;
   color: black;
   padding: 5px;
@@ -193,6 +202,9 @@ code {
   margin-top: 10px;
 }
 
-.editActivityButton:hover {
+.editActivityButton:hover,
+.addActivityToRoutineButton:hover,
+.editRoutineButton:hover,
+.deleteRoutineButton:hover {
   cursor: pointer;
 }

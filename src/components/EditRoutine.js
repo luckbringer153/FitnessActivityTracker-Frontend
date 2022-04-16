@@ -29,7 +29,7 @@ export default function EditRoutine() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(form);
+    console.log("sent form:", form);
 
     try {
       const response = await fetch(
@@ -48,7 +48,7 @@ export default function EditRoutine() {
 
       if (id) {
         console.log(`Routine #${routineId} was successfully edited.`);
-        history.push("/routines");
+        history.push("/myroutines");
       } else {
         throw new Error("error editing routine");
       }
@@ -91,7 +91,6 @@ export default function EditRoutine() {
             value={form.isPublic}
             onChange={handleChange}
           />
-          <label>(false by default)</label>
         </div>
         <input
           type="submit"

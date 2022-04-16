@@ -1,3 +1,5 @@
+//TO RESTART BACKEND SERVER: "sudo service postgresql restart"
+
 import React from "react";
 import {
   BrowserRouter as Router,

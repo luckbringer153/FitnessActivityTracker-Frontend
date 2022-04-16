@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { useAuth } from "../custom-hooks";
+import { useAuth, useActivities } from "../custom-hooks";
 
 export default function EditActivity() {
   const history = useHistory();
   const { search } = useLocation();
-
+  const { activities } = useActivities();
   const searchObject = new URLSearchParams(search);
   const name = searchObject.get("name");
   const description = searchObject.get("description") || "(none currently)";
@@ -29,35 +29,48 @@ export default function EditActivity() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let success = true;
 
     // console.log(form);
-    // console.log({ activityId });
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/activities/${activityId}`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
-
-      // const { success, data, error } = await response.json();
-      const { id } = await response.json();
-
-      if (id) {
-        // console.log(`Activity #${activityId} was successfully edited.`);
-        history.push("/activities");
-      } else {
-        throw new Error("error editing activity");
+    //if the name of the edited activity matches the name of any other activities in the "activities" list, throw an error and prevent the activity from saving
+    for (let i = 0; i < activities.length; i++) {
+      if (name === activities[i].name) {
+        window.alert(
+          "Oops, this activity's name matches another one in the activity list! Please choose a different name."
+        );
+        success = false;
       }
-    } catch (error) {
-      console.error(error);
     }
+
+    if (success) {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/activities/${activityId}`,
+          {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form),
+          }
+        );
+
+        const { id } = await response.json();
+
+        if (id) {
+          // console.log(`Activity #${id} was successfully edited.`);
+          history.push("/activities");
+        } else {
+          throw new Error("error editing activity");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    success = true;
   }
 
   return (

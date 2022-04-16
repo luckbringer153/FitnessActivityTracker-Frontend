@@ -9,7 +9,7 @@ export default function AddRoutine() {
   const [form, setForm] = useState({
     name: "",
     goal: "",
-    isPublic: "",
+    isPublic: false,
   });
   const { token } = useAuth();
 
@@ -20,7 +20,7 @@ export default function AddRoutine() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(form);
+    // console.log(form);
 
     try {
       const response = await fetch(`http://localhost:3000/api/routines`, {
@@ -38,7 +38,7 @@ export default function AddRoutine() {
         // console.log(
         //   `Success! You, creatorId #${creatorId}, made the routine named "${name}".`
         // );
-        history.push("/routines");
+        history.push("/myroutines");
       } else {
         throw new Error("error creating routine");
       }
@@ -83,7 +83,6 @@ export default function AddRoutine() {
             value={form.isPublic}
             onChange={handleChange}
           />
-          <label style={{ marginLeft: 5 + "px" }}>(false by default)</label>
         </div>
         <input
           type="submit"

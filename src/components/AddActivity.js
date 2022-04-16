@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth, useMe } from "../custom-hooks";
+import { useAuth, useMe, useActivities } from "../custom-hooks";
 
 export default function AddActivity() {
   const history = useHistory();
   const { meData } = useMe();
   // console.log("creatorId:", meData.creatorId);
+  const { activities } = useActivities();
 
   const [form, setForm] = useState({
     name: "",
@@ -19,30 +20,45 @@ export default function AddActivity() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let success = true;
 
     // console.log(form);
 
-    try {
-      const response = await fetch(`http://localhost:3000/api/activities`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const { id, name } = await response.json();
-
-      if (id) {
-        // console.log(`Success! You made the activity named "${name}".`);
-        history.push("/activities");
-      } else {
-        throw new Error("error creating activity");
+    //if the name of the created activity matches the name of any other activities in the "activities" list, throw an error and prevent the activity from saving
+    for (let i = 0; i < activities.length; i++) {
+      if (form.name === activities[i].name) {
+        window.alert(
+          "Oops, this activity's name matches another one in the activity list! Please choose a different name."
+        );
+        success = false;
       }
-    } catch (error) {
-      console.error(error);
     }
+
+    if (success) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/activities`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
+
+        const { id } = await response.json();
+
+        if (id) {
+          // console.log(`Success! You made the activity named "${name}".`);
+          history.push("/activities");
+        } else {
+          throw new Error("error creating activity");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    success = true;
   }
 
   return (
