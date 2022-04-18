@@ -29,12 +29,18 @@ export default function Routines() {
     </main>
   ) : (
     <main className="routinesList">
-      <NavLink key="2" to="/newroutine" className="createNewRoutineButton">
+      <NavLink
+        key="2"
+        to="/newroutine"
+        className="createNewRoutineButton"
+        // style={{ marginTop: 10 + "px" }} <-- tried to shift button down, but it wasn't going for some reason. Sigh!
+      >
         Create New Routine
       </NavLink>
       {routines.map((routine) => {
         return (
           <section className="eachRoutine" key={routine.id}>
+            {/* tried to make a "unique 'key' prop" using each routine's id, but it isn't gettting rid of the error */}
             <p>Routine ID #{routine.id}</p>
             <h2>{routine.name}</h2>
             <p>Goal: {routine.goal}</p>
@@ -45,6 +51,7 @@ export default function Routines() {
                 ({ name, description, count, duration, id }) =>
                   id ? (
                     <ul>
+                      {/* tried to make a "unique 'key' prop" using each activity's id, but it isn't gettting rid of the error */}
                       <li key={id}>
                         Do {name} - {description} - {count} times for {duration}{" "}
                         minutes

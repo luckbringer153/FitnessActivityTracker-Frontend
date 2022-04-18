@@ -155,6 +155,11 @@ code {
   padding: 5px;
 }
 
+.removeActivityFromRoutineButton:hover {
+  cursor: pointer;
+  color: rgb(220, 71, 165);
+}
+
 /* AddRoutine Component */
 .addRoutineHeader {
   margin-top: 5px;

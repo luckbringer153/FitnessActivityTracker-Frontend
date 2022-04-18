@@ -35,7 +35,14 @@ export default function EditActivity() {
 
     //if the name of the edited activity matches the name of any other activities in the "activities" list, throw an error and prevent the activity from saving
     for (let i = 0; i < activities.length; i++) {
-      if (name === activities[i].name) {
+      // console.log("form:", form);  //form is getting changed, but the name being compared here isn't changing
+      if (form.name === activities[i].name) {
+        // console.log(
+        //   "comparison between name -",
+        //   name,
+        //   "- and -",
+        //   activities[i].name
+        // );
         window.alert(
           "Oops, this activity's name matches another one in the activity list! Please choose a different name."
         );

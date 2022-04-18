@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useMe, useAuth, useMyRoutines, useActivities } from "../custom-hooks";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+
+//reloads page - used with functions clickDelete, removeActivityFromRoutine, and addActivityToRoutine
+function refresh() {
+  window.location.reload();
+}
 
 export default function MyRoutines() {
   const { meData, setMeData } = useMe();
   const { myRoutines } = useMyRoutines();
+  // console.log(myRoutines[0].isPublic);
   const { token } = useAuth();
   const { activities } = useActivities();
   const [activityName, setActivityName] = useState("any");
-  const history = useHistory();
+  // const history = useHistory();
 
   async function clickDelete(routineId) {
     let answer = false;
@@ -31,10 +37,11 @@ export default function MyRoutines() {
           }
         );
 
-        const { success } = await response.json();
+        const success = await response.json();
+        // console.log(success);  //doesn't return a true or false value! It returns an object with the deleted routine's id, creatorId, isPublic, name, and goal.
 
-        if (success) {
-          // console.log(`Routine #${routineId} was deleted.`);
+        if (success.id) {
+          // console.log(`Routine #${success.id} was deleted.`);
 
           //might not be necessary code
           const filteredRoutines = myRoutines.map((routine) => {
@@ -47,10 +54,7 @@ export default function MyRoutines() {
 
           setMeData({ ...meData, routines: filteredRoutines });
 
-          //I wanted the page to reload on its own once a routine has been deleted. I tried all the options below, no luck. Sigh!
-          // history.push("./myroutines");
-          // document.location.reload();
-          // window.location.reload();
+          refresh();
         }
       } catch (error) {
         console.error(error);
@@ -62,17 +66,21 @@ export default function MyRoutines() {
 
   async function removeActivityFromRoutine(rouActId) {
     try {
-      //do the call to the api that deletes an activity from a routine without deleting it from the activities table
-      //how do I pass "in" the routineActivityId (id in table routine_activities) based on which activity I "clicked" on??
+      // console.log("routine_activityID:", rouActId);
+
       const response = await fetch(
         `http://localhost:3000/api/routine_activities/${rouActId}`,
-        { method: "POST", headers: { Authorization: `Bearer ${token}` } }
+        { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
       );
-      const { routineId, activityId } = response.json();
-      if (routineId) {
-        console.log(
-          `Activity #${activityId} was removed from routine #${routineId}.`
-        );
+
+      // const { routineId, activityId } = response.json();
+      const success = response.json(); // Doesn't seem to really work, but ran out of time to troubleshoot
+
+      if (success) {
+        // console.log(
+        //   `Activity #${activityId} was removed from routine #${routineId}.`
+        // );
+        refresh();
       } else {
         throw new Error("error editing this routine's activity");
       }
@@ -85,13 +93,14 @@ export default function MyRoutines() {
     const activityList = document.getElementById("select-activity");
     const gettingSelectedActivity =
       activityList.options[activityList.selectedIndex].innerHTML;
-
-    const activityCount = document.getElementById("count").value;
-    const activityDuration = document.getElementById("duration").value;
+    const activityCount = document.getElementById(`count ${routineId}`).value;
+    const activityDuration = document.getElementById(
+      `duration ${routineId}`
+    ).value;
     let selectedActivity = "";
     let activityId = "";
 
-    //"if char #5 is a space, then the ID is single-digits case; if not, it's a double-digit
+    //"if char #5 is a space, then the ID is single-digits case; if not, it's a double-digit"
     if (gettingSelectedActivity.charAt(5) === " ") {
       // console.log("space here!");
 
@@ -104,48 +113,46 @@ export default function MyRoutines() {
       activityId = activityId1.concat(activityId2);
     }
 
-    console.log(
-      "activity name:",
-      selectedActivity,
-      ", routine ID:",
-      routineId,
-      ", count:",
-      activityCount,
-      ", duration:",
-      activityDuration,
-      ", activity ID:",
-      activityId
-    );
+    // console.log(
+    //   "activity name:",
+    //   selectedActivity,
+    //   ", routine ID:",
+    //   routineId,
+    //   ", count:",
+    //   activityCount,
+    //   ", duration:",
+    //   activityDuration,
+    //   ", activity ID:",
+    //   activityId
+    // );
 
-    //tried to test with this curl:
-    // curl http://localhost:3000/api/16/activities -X POST -H 'Content-Type:application/json' -d '{"activityId":"7","count":"2","duration":"5"}'
+    //if what you selected already exists in the list of activities for this routine, do nothing
+    //ran out of time to implement, but thought it'd be a great idea!
+
+    //makes sure a valid option is selected before doing proceeding
     if (selectedActivity !== "Add Created Activity") {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/${routineId}/activities`,
+          `http://localhost:3000/api/routines/${routineId}/activities`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              // Authorization: `Bearer ${token}`,  //don't think this is used here but just in case
+              Authorization: `Bearer ${token}`, //don't think this is used here but just in case
             },
             body: JSON.stringify({
               activityId: activityId,
-              activityCount: activityCount,
-              activityDuration: activityDuration,
+              count: activityCount,
+              duration: activityDuration,
             }),
           }
         );
 
-        const editedRoutine = response.json();
-        // const { duration } = response.json();
+        const success = response.json(); // Doesn't seem to really work, but ran out of time to troubleshoot
 
-        console.log(editedRoutine, editedRoutine.duration); //"Promise {<pending>} undefined"
-
-        if (editedRoutine.routineId) {
-          console.log(
-            `Routine ID #${editedRoutine.routineId} was successfully edited.`
-          );
+        if (success) {
+          // console.log(`Routine ID #${duration} was successfully edited.`);
+          refresh();
         } else {
           throw new Error("error editing routine");
         }
@@ -185,7 +192,7 @@ export default function MyRoutines() {
                       Routine Goal: {routine.goal}
                     </div>
                     <div className="eachMyRoutinesisPublic">
-                      isPublic: {routine.isPublic}
+                      Public Post: {routine.isPublic ? "true" : "false"}
                     </div>
                     <div>
                       {routine.activities.map(
@@ -199,11 +206,13 @@ export default function MyRoutines() {
                         }) =>
                           id ? (
                             <ul>
+                              {/* tried to make a "unique 'key' prop" using each activity's id, but it isn't gettting rid of the error */}
                               <li key={id}>
                                 Do {name} - {description} - {count} times for{" "}
                                 {duration} minutes
                               </li>
                               <li
+                                className="removeActivityFromRoutineButton"
                                 onClick={() =>
                                   removeActivityFromRoutine(routineActivityId)
                                 }
@@ -241,7 +250,8 @@ export default function MyRoutines() {
                         Enter Count:
                         <input
                           type="number"
-                          id="count"
+                          // id="count"
+                          id={`count ${routine.id}`}
                           style={{ marginLeft: 5 + "px" }}
                         ></input>
                       </div>
@@ -249,7 +259,8 @@ export default function MyRoutines() {
                         Enter Duration:
                         <input
                           type="number"
-                          id="duration"
+                          // id="duration"
+                          id={`duration ${routine.id}`}
                           style={{ marginLeft: 5 + "px" }}
                         ></input>
                       </div>
